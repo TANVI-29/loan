@@ -1,0 +1,183 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loan Calculators - LoanSure</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <link rel="stylesheet" href="{% static 'css/calculator-styles.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="calculator-page">
+        <div class="calculator-header">
+            <h1>Loan Calculators</h1>
+            <p>Choose the calculator you need</p>
+        </div>
+
+        <!-- Calculator Tabs -->
+        <div class="calculator-tabs">
+            <button class="tab-btn active" data-tab="emi">
+                <i class="fas fa-calculator"></i>
+                EMI Calculator
+            </button>
+            <button class="tab-btn" data-tab="eligibility">
+                <i class="fas fa-check-circle"></i>
+                Eligibility Calculator
+            </button>
+            <button class="tab-btn" data-tab="interest">
+                <i class="fas fa-percent"></i>
+                Interest Calculator
+            </button>
+        </div>
+
+        <!-- Calculator Panels -->
+        <div class="calculator-panels">
+            <!-- EMI Calculator Panel -->
+            <div class="calculator-panel active" id="emi-panel">
+                <div class="calc-card" id="emi-calc">
+                    <div class="calc-icon">
+                        <i class="fas fa-calculator"></i>
+                    </div>
+                    <h2>EMI Calculator</h2>
+                    <p>Calculate your monthly EMI</p>
+                    <div class="calc-form">
+                        <div class="input-group">
+                            <label>Loan Amount (₹)</label>
+                            <input type="number" id="emiAmount" placeholder="Enter loan amount">
+                            <input type="range" id="emiAmountSlider" min="10000" max="10000000" step="10000">
+                        </div>
+                        <div class="input-group">
+                            <label>Interest Rate (%)</label>
+                            <input type="number" id="emiRate" placeholder="Enter interest rate">
+                            <input type="range" id="emiRateSlider" min="1" max="30" step="0.1">
+                        </div>
+                        <div class="input-group">
+                            <label>Loan Tenure (Years)</label>
+                            <input type="number" id="emiTenure" placeholder="Enter tenure">
+                            <input type="range" id="emiTenureSlider" min="1" max="30" step="1">
+                        </div>
+                        <button class="calc-btn" onclick="calculateEMI()">
+                            Calculate EMI
+                        </button>
+                    </div>
+                    <div class="calc-result" id="emiResult">
+                        <div class="result-chart">
+                            <canvas id="emiChart"></canvas>
+                        </div>
+                        <div class="result-details">
+                            <div class="result-item">
+                                <span>Monthly EMI:</span>
+                                <span class="amount" id="monthlyEMI">₹0</span>
+                            </div>
+                            <div class="result-item">
+                                <span>Total Interest:</span>
+                                <span class="amount" id="totalInterest">₹0</span>
+                            </div>
+                            <div class="result-item">
+                                <span>Total Amount:</span>
+                                <span class="amount" id="totalAmount">₹0</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Eligibility Calculator Panel -->
+            <div class="calculator-panel" id="eligibility-panel">
+                <div class="calc-card" id="eligibility-calc">
+                    <div class="calc-icon">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <h2>Loan Eligibility</h2>
+                    <p>Check your loan eligibility</p>
+                    <div class="calc-form">
+                        <div class="input-group">
+                            <label>Monthly Income (₹)</label>
+                            <input type="number" id="monthlyIncome" placeholder="Enter monthly income">
+                            <input type="range" id="incomeSlider" min="10000" max="1000000" step="5000">
+                        </div>
+                        <div class="input-group">
+                            <label>Existing EMIs (₹)</label>
+                            <input type="number" id="existingEMI" placeholder="Enter existing EMIs">
+                            <input type="range" id="emiSlider" min="0" max="500000" step="1000">
+                        </div>
+                        <div class="input-group">
+                            <label>Interest Rate (%)</label>
+                            <input type="number" id="eligibilityRate" placeholder="Enter interest rate">
+                            <input type="range" id="eligibilityRateSlider" min="1" max="30" step="0.1">
+                        </div>
+                        <div class="input-group">
+                            <label>Loan Tenure (Years)</label>
+                            <input type="number" id="eligibilityTenure" placeholder="Enter tenure">
+                            <input type="range" id="eligibilityTenureSlider" min="1" max="30" step="1">
+                        </div>
+                        <button class="calc-btn" onclick="calculateEligibility()">
+                            Check Eligibility
+                        </button>
+                    </div>
+                    <div class="calc-result" id="eligibilityResult">
+                        <div class="result-item highlight">
+                            <span>Eligible Loan Amount:</span>
+                            <span class="amount" id="eligibleAmount">₹0</span>
+                        </div>
+                        <div class="eligibility-meter">
+                            <div class="meter-bar" id="eligibilityMeter"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Interest Calculator Panel -->
+            <div class="calculator-panel" id="interest-panel">
+                <div class="calc-card" id="interest-calc">
+                    <div class="calc-icon">
+                        <i class="fas fa-percent"></i>
+                    </div>
+                    <h2>Interest Calculator</h2>
+                    <p>Calculate total interest payable</p>
+                    <div class="calc-form">
+                        <div class="input-group">
+                            <label>Principal Amount (₹)</label>
+                            <input type="number" id="principalAmount" placeholder="Enter principal amount">
+                            <input type="range" id="principalSlider" min="10000" max="10000000" step="10000">
+                        </div>
+                        <div class="input-group">
+                            <label>Interest Rate (%)</label>
+                            <input type="number" id="interestRate" placeholder="Enter interest rate">
+                            <input type="range" id="interestRateSlider" min="1" max="30" step="0.1">
+                        </div>
+                        <div class="input-group">
+                            <label>Time Period (Years)</label>
+                            <input type="number" id="timePeriod" placeholder="Enter time period">
+                            <input type="range" id="timeSlider" min="1" max="30" step="1">
+                        </div>
+                        <button class="calc-btn" onclick="calculateInterest()">
+                            Calculate Interest
+                        </button>
+                    </div>
+                    <div class="calc-result" id="interestResult">
+                        <div class="result-chart">
+                            <canvas id="interestChart"></canvas>
+                        </div>
+                        <div class="result-details">
+                            <div class="result-item">
+                                <span>Total Interest:</span>
+                                <span class="amount" id="totalInterestAmount">₹0</span>
+                            </div>
+                            <div class="result-item">
+                                <span>Total Amount:</span>
+                                <span class="amount" id="totalPayableAmount">₹0</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="{% static 'javascript/calculator.js' %}"></script>
+</body>
+</html> 

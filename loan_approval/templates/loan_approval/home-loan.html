@@ -1,0 +1,47 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Loan Application</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body class="form-page">
+    <div class="form-container">
+        <h2>Home Loan Application</h2>
+        <form id="homeLoanForm" action="/submit-home-loan" method="POST">
+            <div class="form-group">
+                <label for="name">Full Name</label>
+                <input type="text" id="name" name="name" required>
+                
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" required>
+                
+                <label for="phone">Phone Number</label>
+                <input type="tel" id="phone" name="phone" required>
+                
+                <label for="propertyValue">Property Value</label>
+                <input type="number" id="propertyValue" name="propertyValue" required>
+                
+                <label for="loanAmount">Loan Amount Required</label>
+                <input type="number" id="loanAmount" name="loanAmount" required>
+                
+                <label for="propertyType">Property Type</label>
+                <select id="propertyType" name="propertyType" required>
+                    <option value="">Select Property Type</option>
+                    <option value="apartment">Apartment</option>
+                    <option value="independent">Independent House</option>
+                    <option value="villa">Villa</option>
+                </select>
+                
+                <label for="propertyLocation">Property Location</label>
+                <input type="text" id="propertyLocation" name="propertyLocation" required>
+                
+                <button type="submit" class="submit-btn">Submit Application</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html> 

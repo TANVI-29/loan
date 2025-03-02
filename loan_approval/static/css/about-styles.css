@@ -1,0 +1,197 @@
+.about-page {
+    min-height: 100vh;
+    background: linear-gradient(-45deg, #23a6d5, #23d5ab, #23a6d5, #23d5ab);
+    background-size: 400% 400%;
+    animation: gradient 15s ease infinite;
+    padding: 2rem;
+}
+
+.about-wrapper {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Header Styles */
+.about-header {
+    text-align: center;
+    color: rgb(0, 0, 0);
+    margin-bottom: 4rem;
+    opacity: 0;
+    animation: fadeIn 1s ease forwards;
+}
+
+.about-header i {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+}
+
+.about-header h1 {
+    font-size: 3.5rem;
+    margin: 1rem 0;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Section Styles */
+.about-section {
+    background: rgba(0, 0, 0, 0.95);
+    border-radius: 20px;
+    padding: 2.5rem;
+    margin-bottom: 3rem;
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+    opacity: 0;
+}
+
+.section-icon {
+    background: linear-gradient(135deg, #23a6d5, #23d5ab);
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+}
+
+.section-icon i {
+    font-size: 2rem;
+    color: rgb(0, 0, 0);
+}
+
+/* Prediction Steps */
+.prediction-steps {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.step {
+    text-align: center;
+    padding: 1.5rem;
+    border-radius: 15px;
+    background: rgba(255, 255, 255, 0.5);
+    transition: transform 0.3s ease;
+}
+
+.step:hover {
+    transform: translateY(-5px);
+}
+
+.step-number {
+    width: 40px;
+    height: 40px;
+    background: linear-gradient(135deg, #23a6d5, #23d5ab);
+    border-radius: 50%;
+    color: rgb(25, 8, 100);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1rem;
+    font-weight: bold;
+}
+
+/* Tech Features */
+.tech-features {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.tech-feature {
+    text-align: center;
+    padding: 1.5rem;
+    transition: transform 0.3s ease;
+}
+
+.tech-feature i {
+    font-size: 2.5rem;
+    color: #23a6d5;
+    margin-bottom: 1rem;
+}
+
+/* Stats Container */
+.stats-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.stat-item {
+    text-align: center;
+    padding: 1.5rem;
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 15px;
+    transition: transform 0.3s ease;
+}
+
+.stat-number {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #23a6d5;
+    margin-bottom: 0.5rem;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.animate-slide-right {
+    animation: slideRight 1s ease forwards;
+}
+
+.animate-slide-left {
+    animation: slideLeft 1s ease forwards;
+}
+
+@keyframes slideRight {
+    from {
+        transform: translateX(-100px);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideLeft {
+    from {
+        transform: translateX(100px);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+/* Hover Effects */
+.about-section:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+}
+
+.stat-item:hover {
+    transform: translateY(-5px);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .about-header h1 {
+        font-size: 2.5rem;
+    }
+
+    .about-section {
+        padding: 1.5rem;
+    }
+
+    .prediction-steps,
+    .tech-features,
+    .stats-container {
+        grid-template-columns: 1fr;
+    }
+} 

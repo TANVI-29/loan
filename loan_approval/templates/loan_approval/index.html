@@ -1,0 +1,413 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loan Prediction System</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Updated Navbar with Animated SVG Logo -->
+    <nav class="navbar">
+        <div class="nav-brand">
+            <div class="logo-container">
+                <div class="logo-icon">
+                    <i class="fas fa-chart-line"></i>
+                    <i class="fas fa-coins overlay-icon"></i>
+                </div>
+                <span class="brand-name">LoanSure</span>
+            </div>
+        </div>
+        
+        <div class="nav-links">
+            <a href="#home" class="nav-link">
+                <i class="fas fa-home"></i>
+                <span>Home</span>
+                <div class="nav-line"></div>
+            </a>
+            <a href="{% url 'loan_approval:calculators'%}" class="nav-link">
+                <i class="fas fa-calculator"></i>
+                <span>Calculators</span>
+                <div class="nav-line"></div>
+            </a>
+            <a href="{% url 'loan_approval:about-us'%}" class="nav-link">
+                <i class="fas fa-info-circle"></i>
+                <span>About Us</span>
+                <div class="nav-line"></div>
+            </a>
+        </div>
+    </nav>
+
+    <!-- Add these elements right after the opening body tag -->
+    <div class="wave-container">
+        <div class="wave"></div>
+        <div class="wave"></div>
+        <div class="wave"></div>
+    </div>
+
+    <div class="floating-elements">
+        <div class="float-element"></div>
+        <div class="float-element"></div>
+        <div class="float-element"></div>
+    </div>
+
+    <div class="shimmer"></div>
+
+    <!-- Main Container -->
+    <div class="main-container">
+        <!-- Hero Section with Loan Buttons -->
+        <div class="hero-section">
+            <h1>Choose Your Loan Type</h1>
+            <p>Select from our range of loan options tailored to your needs</p>
+            
+            <div class="loan-types-container">
+                <div class="loan-type" onclick="openLoanForm('personal')">
+                    <div class="loan-icon personal">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <h3>Personal Loan</h3>
+                    <p>Quick loans for your personal needs</p>
+                </div>
+
+                <div class="loan-type" onclick="openLoanForm('home')">
+                    <div class="loan-icon home">
+                        <i class="fas fa-home"></i>
+                    </div>
+                    <h3>Home Loan</h3>
+                    <p>Make your dream home a reality</p>
+                </div>
+
+                <div class="loan-type" onclick="openLoanForm('gold')">
+                    <div class="loan-icon gold">
+                        <i class="fas fa-coins"></i>
+                    </div>
+                    <h3>Gold Loan</h3>
+                    <p>Get instant loans against your gold</p>
+                </div>
+            </div>
+
+            <!-- Main Features Section -->
+            <div class="features-section">
+                <div class="feature-box">
+                    <div class="feature-icon">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <h3>Quick Approval</h3>
+                    <p>Get your loan approved within 24 hours with minimal documentation</p>
+                </div>
+
+                <div class="feature-box">
+                    <div class="feature-icon">
+                        <i class="fas fa-percentage"></i>
+                    </div>
+                    <h3>Low Interest Rates</h3>
+                    <p>Competitive interest rates starting from 8.99% per annum</p>
+                </div>
+
+                <div class="feature-box">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>Secure Process</h3>
+                    <p>Bank-grade security for all your transactions and documents</p>
+                </div>
+            </div>
+
+            <!-- Loan Specific Features -->
+            <div class="loan-features-container">
+                <!-- Personal Loan Features -->
+                <div class="loan-feature-section">
+                    <h2 class="feature-title"><i class="fas fa-user"></i> Personal Loan Features</h2>
+                    <div class="loan-features-grid">
+                        <div class="feature-box">
+                            <div class="feature-icon">
+                                <i class="fas fa-money-bill-wave"></i>
+                            </div>
+                            <h3>Flexible Amount</h3>
+                            <p>Borrow from ₹50,000 to ₹50 lakhs</p>
+                        </div>
+                        <div class="feature-box">
+                            <div class="feature-icon">
+                                <i class="fas fa-file-alt"></i>
+                            </div>
+                            <h3>Minimal Documents</h3>
+                            <p>Only basic KYC documents required</p>
+                        </div>
+                        <div class="feature-box">
+                            <div class="feature-icon">
+                                <i class="fas fa-clock"></i>
+                            </div>
+                            <h3>Quick Disbursement</h3>
+                            <p>Amount credited within 24 hours</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Home Loan Features -->
+                <div class="loan-feature-section">
+                    <h2 class="feature-title"><i class="fas fa-home"></i> Home Loan Features</h2>
+                    <div class="loan-features-grid">
+                        <div class="feature-box">
+                            <div class="feature-icon">
+                                <i class="fas fa-calendar-alt"></i>
+                            </div>
+                            <h3>Long Tenure</h3>
+                            <p>Repayment tenure up to 30 years</p>
+                        </div>
+                        <div class="feature-box">
+                            <div class="feature-icon">
+                                <i class="fas fa-chart-line"></i>
+                            </div>
+                            <h3>High Value Funding</h3>
+                            <p>Up to 90% of property value</p>
+                        </div>
+                        <div class="feature-box">
+                            <div class="feature-icon">
+                                <i class="fas fa-tax"></i>
+                            </div>
+                            <h3>Tax Benefits</h3>
+                            <p>Tax benefits under Section 80C</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Gold Loan Features -->
+                <div class="loan-feature-section">
+                    <h2 class="feature-title"><i class="fas fa-coins"></i> Gold Loan Features</h2>
+                    <div class="loan-features-grid">
+                        <div class="feature-box">
+                            <div class="feature-icon">
+                                <i class="fas fa-tachometer-alt"></i>
+                            </div>
+                            <h3>Instant Approval</h3>
+                            <p>Get loan within 30 minutes</p>
+                        </div>
+                        <div class="feature-box">
+                            <div class="feature-icon">
+                                <i class="fas fa-lock"></i>
+                            </div>
+                            <h3>Secure Storage</h3>
+                            <p>Insurance coverage for gold</p>
+                        </div>
+                        <div class="feature-box">
+                            <div class="feature-icon">
+                                <i class="fas fa-hand-holding-usd"></i>
+                            </div>
+                            <h3>High Value</h3>
+                            <p>Up to 75% of gold value</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Feedback Section -->
+            <div class="feedback-section">
+                <div class="feedback-content">
+                    <h2 class="feedback-title">Your Opinion Matters</h2>
+                    <p class="feedback-subtitle">Help us improve our services</p>
+                    <a href="{% url 'loan_approval:feedback'%}"  class="feedback-btn">
+                        <i class="fas fa-comments"></i>
+                        Feedback
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Loan Application Forms (Popups) -->
+        <div id="personalLoanForm" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h2>Personal Loan Application</h2>
+                <form id="personalLoanForm">
+                    <div class="form-group">
+                        <label for="name">Full Name</label>
+                        <input type="text" id="name" required>
+                        
+                        <label for="email">Email</label>
+                        <input type="email" id="email" required>
+                        
+                        <label for="phone">Phone Number</label>
+                        <input type="tel" id="phone" required>
+                        
+                        <label for="income">Monthly Income</label>
+                        <input type="number" id="income" required>
+                        
+                        <label for="loanAmount">Loan Amount Required</label>
+                        <input type="number" id="loanAmount" required>
+                        
+                        <label for="tenure">Loan Tenure (in months)</label>
+                        <input type="number" id="tenure" required>
+                        
+                        <label for="occupation">Occupation</label>
+                        <select id="occupation" required>
+                            <option value="">Select Occupation</option>
+                            <option value="salaried">Salaried</option>
+                            <option value="self-employed">Self Employed</option>
+                            <option value="business">Business Owner</option>
+                        </select>
+                        
+                        <button type="submit" class="submit-btn">Apply Now</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div id="homeLoanForm" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h2>Home Loan Application</h2>
+                <form id="homeLoanForm">
+                    <div class="form-group">
+                        <label for="name">Full Name</label>
+                        <input type="text" id="name" required>
+                        
+                        <label for="email">Email</label>
+                        <input type="email" id="email" required>
+                        
+                        <label for="phone">Phone Number</label>
+                        <input type="tel" id="phone" required>
+                        
+                        <label for="propertyValue">Property Value</label>
+                        <input type="number" id="propertyValue" required>
+                        
+                        <label for="loanAmount">Loan Amount Required</label>
+                        <input type="number" id="loanAmount" required>
+                        
+                        <label for="propertyType">Property Type</label>
+                        <select id="propertyType" required>
+                            <option value="">Select Property Type</option>
+                            <option value="apartment">Apartment</option>
+                            <option value="independent">Independent House</option>
+                            <option value="villa">Villa</option>
+                        </select>
+                        
+                        <label for="propertyLocation">Property Location</label>
+                        <input type="text" id="propertyLocation" required>
+                        
+                        <label for="income">Monthly Income</label>
+                        <input type="number" id="income" required>
+                        
+                        <label for="employment">Employment Type</label>
+                        <select id="employment" required>
+                            <option value="">Select Employment Type</option>
+                            <option value="salaried">Salaried</option>
+                            <option value="self-employed">Self Employed</option>
+                            <option value="business">Business Owner</option>
+                        </select>
+                        
+                        <button type="submit" class="submit-btn">Apply Now</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div id="goldLoanForm" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h2>Gold Loan Application</h2>
+                <form id="goldLoanForm">
+                    <div class="form-group">
+                        <label for="name">Full Name</label>
+                        <input type="text" id="name" required>
+                        
+                        <label for="email">Email</label>
+                        <input type="email" id="email" required>
+                        
+                        <label for="phone">Phone Number</label>
+                        <input type="tel" id="phone" required>
+                        
+                        <label for="goldWeight">Gold Weight (in grams)</label>
+                        <input type="number" id="goldWeight" required>
+                        
+                        <label for="goldPurity">Gold Purity</label>
+                        <select id="goldPurity" required>
+                            <option value="">Select Purity</option>
+                            <option value="24">24 Karat</option>
+                            <option value="22">22 Karat</option>
+                            <option value="18">18 Karat</option>
+                        </select>
+                        
+                        <label for="loanAmount">Loan Amount Required</label>
+                        <input type="number" id="loanAmount" required>
+                        
+                        <label for="ornamentType">Ornament Type</label>
+                        <select id="ornamentType" required>
+                            <option value="">Select Ornament Type</option>
+                            <option value="necklace">Necklace</option>
+                            <option value="ring">Ring</option>
+                            <option value="bracelet">Bracelet</option>
+                            <option value="chain">Chain</option>
+                            <option value="other">Other</option>
+                        </select>
+                        
+                        <button type="submit" class="submit-btn">Apply Now</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Feedback Modal -->
+        <div class="feedback-modal" id="feedbackModal">
+            <div class="modal-content">
+                <span class="close-btn" onclick="closeFeedbackModal()">&times;</span>
+                <h2>Share Your Feedback</h2>
+                <form id="feedbackForm" onsubmit="submitFeedback(event)">
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" required 
+                               pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+                               placeholder="example@email.com">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="feedbackType">Feedback Type</label>
+                        <select id="feedbackType" name="feedbackType" required>
+                            <option value="">Select type</option>
+                            <option value="suggestion">Suggestion</option>
+                            <option value="issue">Issue Report</option>
+                            <option value="appreciation">Appreciation</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="message">Your Message</label>
+                        <textarea id="message" name="message" required></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="subscribe" name="subscribe">
+                            Subscribe to updates and newsletters
+                        </label>
+                    </div>
+
+                    <button type="submit" class="submit-btn">
+                        <i class="fas fa-paper-plane"></i>
+                        Send Feedback
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer with Privacy Policy -->
+    <footer class="footer">
+        <div class="privacy-container">
+            <a href="{% url 'loan_approval:privacy-policy'%}"  class="privacy-btn">
+                <i class="fas fa-shield-alt"></i>
+                Privacy Policy
+            </a>
+        </div>
+    </footer>
+
+    <script src="{% static 'javascript/script.js' %}"></script>
+</body>
+</html> 

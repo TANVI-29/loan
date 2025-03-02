@@ -1,0 +1,84 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gold Loan Application - LoanSure</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="{% static 'css/loan-forms.css' %}">
+    
+</head>
+<body class="gold-theme">
+    <div class="form-container">
+        <div class="form-header">
+            <i class="fas fa-coins form-icon"></i>
+            <h2>Gold Loan Application</h2>
+            <p>Fill in your details to apply for a gold loan</p>
+        </div>
+        <form action="{% url 'loan_approval:result' %}" method="POST">
+           
+            {% csrf_token %}
+        
+        <form id="goldLoanForm">
+
+            <!-- Personal Information Section -->
+            
+
+            <!-- Gold Details Section -->
+            <div class="form-section">
+                <h3>Gold Details</h3>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="goldType">Type of Gold</label>
+                        <select id="goldType" required>
+                            <option value="">Select Type</option>
+                            <option value="jewelry">Gold Jewelry</option>
+                            <option value="coins">Gold Coins</option>
+                            <option value="bars">Gold Bars</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="goldWeight">Gold Weight (grams)</label>
+                        <input type="number" id="goldWeight" name='goldWeight' required>
+                    </div>
+                    <div class="form-group">
+                        <label for="goldPurity">Gold Purity (Karats)</label>
+                        <select id="goldPurity" required>
+                            <option value="">Select Purity</option>
+                            <option value="24">24K</option>
+                            <option value="22">22K</option>
+                            <option value="18">18K</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="loanAmount">Required Loan Amount (₹)</label>
+                        <input type="number" id="loanAmount" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="income">Annual Income (₹)</label>
+                        <input type="number" id="loanAmount" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="CIBILscore">CIBIL Score</label>
+                        <input type="number" id="score" required>
+                    </div>
+                    <div id="resultBox" style="display: none;"></div>
+
+
+
+                
+            </div>
+
+            <button type="submit" class="submit-btn">
+                <i class="fas fa-paper-plane"></i>
+                Submit Application
+                <a href="{% url 'loan_approval:result' %}"  ></a>
+            </button>
+        </form>
+    </form>
+    </div>
+    <script src="{% static 'javascript/loan-forms.js' %}"></script>
+</body>
+</html> 

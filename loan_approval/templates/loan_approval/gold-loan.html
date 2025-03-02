@@ -1,0 +1,115 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gold Loan Application - LoanSure</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="{% static 'css/loan-forms.css' %}">
+    <style>
+        #resultBox {
+            display: none; /* Initially hidden */
+            margin-top: 20px;
+            padding: 10px;
+            border-radius: 5px;
+            font-size: 18px;
+            text-align: center;
+            width: 300px;
+        }
+        .approved {
+            background-color: #4CAF50; /* Green */
+            color: white;
+        }
+        .rejected {
+            background-color: #f44336; /* Red */
+            color: white;
+        }
+    </style>
+</head>
+<body class="gold-theme">
+    <div class="form-container">
+        <div class="form-header">
+            <i class="fas fa-coins form-icon"></i>
+            <h2>Gold Loan Application</h2>
+            <p>Fill in your details to apply for a gold loan</p>
+        </div>
+        
+        <form id="goldLoanForm">
+            <div class="form-section">
+                <h3>Gold Details</h3>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="goldType">Type of Gold</label>
+                        <select id="goldType" name="goldType" required>
+                            <option value="">Select Type</option>
+                            <option value="jewelry">Gold Jewelry</option>
+                            <option value="coins">Gold Coins</option>
+                            <option value="bars">Gold Bars</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="goldWeight">Gold Weight (grams)</label>
+                        <input type="number" id="goldWeight" name="goldWeight" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="goldPurity">Gold Purity (Karats)</label>
+                        <select id="goldPurity" name="goldPurity" required>
+                            <option value="">Select Purity</option>
+                            <option value="24">24K</option>
+                            <option value="22">22K</option>
+                            <option value="18">18K</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="loanAmount">Required Loan Amount (₹)</label>
+                        <input type="number" id="loanAmount" name="loanAmount" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="score">CIBIL Score</label>
+                        <input type="number" id="score" name="score" required>
+                    </div>
+                </div>
+            </div>
+
+            <button type="submit" class="submit-btn">
+                <i class="fas fa-paper-plane"></i>
+                Submit Application
+            </button>
+        </form>
+
+        <!-- Result Box -->
+        <div id="resultBox"></div>
+    </div>
+
+    <!-- JavaScript Code -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            document.getElementById("goldLoanForm").addEventListener("submit", function (event) {
+                event.preventDefault(); // Prevent default form submission
+                let formData = new FormData(this);
+
+                fetch("/predict/", {
+                    method: "POST",
+                    body: formData
+                })
+                .then(response => response.json())
+                .then(data => {
+                    let resultBox = document.getElementById("resultBox");
+                    resultBox.style.display = "block"; // Show result box
+                    resultBox.innerText = data.prediction;
+
+                    // Apply different styles based on the prediction
+                    if (data.prediction === "Approved") {
+                        resultBox.className = "approved";
+                    } else {
+                        resultBox.className = "rejected";
+                    }
+                })
+                .catch(error => console.error("Error:", error));
+            });
+        });
+    </script>
+
+</body>
+</html>

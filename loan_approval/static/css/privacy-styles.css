@@ -1,0 +1,156 @@
+.privacy-page {
+    min-height: 100vh;
+    background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+    background-size: 400% 400%;
+    animation: gradient 15s ease infinite;
+    padding: 2rem;
+}
+
+.privacy-wrapper {
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.privacy-header {
+    text-align: center;
+    color: white;
+    margin-bottom: 3rem;
+    opacity: 0;
+}
+
+.privacy-header i {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+}
+
+.privacy-header h1 {
+    font-size: 3rem;
+    margin: 1rem 0;
+}
+
+.privacy-sections {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.privacy-section {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 15px;
+    padding: 2rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    opacity: 0;
+    transform: translateX(-50px);
+    transition: all 0.5s ease;
+}
+
+.section-icon {
+    background: linear-gradient(135deg, #23a6d5, #23d5ab);
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1rem;
+}
+
+.section-icon i {
+    font-size: 1.5rem;
+    color: white;
+}
+
+.privacy-section h2 {
+    color: #333;
+    margin-bottom: 1rem;
+}
+
+.privacy-section p {
+    color: #666;
+    line-height: 1.6;
+}
+
+/* Animations */
+.animate-down {
+    animation: slideDown 0.5s ease forwards;
+}
+
+.animate-right {
+    animation: slideRight 0.5s ease forwards;
+    animation-delay: calc(var(--i, 0) * 0.1s);
+}
+
+.animate-left {
+    animation: slideLeft 0.5s ease forwards;
+    animation-delay: calc(var(--i, 0) * 0.1s);
+}
+
+@keyframes slideDown {
+    from {
+        transform: translateY(-50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideRight {
+    from {
+        transform: translateX(-50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideLeft {
+    from {
+        transform: translateX(50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+/* Hover Effects */
+.privacy-section:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+}
+
+.privacy-section:hover .section-icon {
+    animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .privacy-header i {
+        font-size: 3rem;
+    }
+
+    .privacy-header h1 {
+        font-size: 2rem;
+    }
+
+    .privacy-section {
+        padding: 1.5rem;
+    }
+} 
