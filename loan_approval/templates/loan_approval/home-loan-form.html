@@ -8,6 +8,13 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="{% static 'css/loan-forms.css' %}">
 </head>
+   <script>
+     function toggleLoanFields() {
+            var emiSection = document.getElementById("loan-details");
+            var hasLoans = document.querySelector('input[name="has_loans"]:checked').value;
+            emiSection.style.display = (hasLoans === "yes") ? "block" : "none";
+        }
+   </script>
 <body class="home-theme">
     <div class="form-container">
         <div class="form-header">
@@ -15,17 +22,38 @@
             <h2>Home Loan Application</h2>
             <p>Fill in your details to apply for a home loan</p>
         </div>
-
-        <form id="homeLoanForm" onsubmit="submitLoanApplication(event, 'home')">
+        <form action="/home-loan-form/result/" method="POST">
+           
+            {% csrf_token %}
+        <form id="homeLoanForm" >
             <!-- Personal Information Section -->
             <div class="form-section">
                 <h3>Personal Information</h3>
                 <div class="form-grid">
                     <div class="form-group">
-                        <label for="fullName">Full Name</label>
-                        <input type="text" id="fullName" required>
+                        <label for="Age">Age</label>
+                        <input type="text" id="Age" required>
                     </div>
                     <div class="form-group">
+                       <label for="income"> Income (₹):</label>
+                       <input type="text" id="income" name="income" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="WorkExperience">Work Experience (Years)</label>
+                        <input type="text" id="WorkExperience" name="WorkExperience" required>
+                            
+                    </div>
+                    <div class="form-group">
+                        <label for="CIBILSCore">CIBIL Score</label>
+                        <input type="text" id="CIBILSCore" name="CIBILSCore" required>
+                            
+                    </div>
+                    <div class="form-group">
+                        <label for="Existing_loan">Existing loan</label>
+                        <input type="text" id="Existing_loan" name="Existing_loan" required>
+                            
+                    </div>
+                    <!-- <div class="form-group">
                         <label for="email">Email</label>
                         <input type="email" id="email" required>
                     </div>
@@ -36,7 +64,7 @@
                     <div class="form-group">
                         <label for="dob">Date of Birth</label>
                         <input type="date" id="dob" required>
-                    </div>
+                    </div> -->
                 </div>
             </div>
 
@@ -44,37 +72,45 @@
             <div class="form-section">
                 <h3>Property Details</h3>
                 <div class="form-grid">
+                    
                     <div class="form-group">
-                        <label for="propertyType">Property Type</label>
-                        <select id="propertyType" required>
-                            <option value="">Select Type</option>
-                            <option value="apartment">Apartment</option>
-                            <option value="house">Independent House</option>
-                            <option value="plot">Plot</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="propertyValue">Property Value (₹)</label>
-                        <input type="number" id="propertyValue" required>
+                        <label for="property_Value">Property Value (₹)</label>
+                        <input type="text" id="property_Value" name="property_Value" required>
                     </div>
                     <div class="form-group">
                         <label for="loanAmount">Loan Amount (₹)</label>
-                        <input type="number" id="loanAmount" required>
+                        <input type="text" id="loanAmount" name="loanAmount" required>
                     </div>
-                    <div class="form-group">
-                        <label for="tenure">Loan Tenure (Years)</label>
-                        <select id="tenure" required>
-                            <option value="">Select Tenure</option>
-                            <option value="10">10 Years</option>
-                            <option value="15">15 Years</option>
-                            <option value="20">20 Years</option>
-                            <option value="25">25 Years</option>
-                            <option value="30">30 Years</option>
-                        </select>
-                    </div>
+                    <!-- <div class="form-group">
+                        <label for="WorkExperience">Work Experience (Years)</label>
+                        <input type="text" id="tenure" name="WorkExperience" required>
+                            
+                    </div> -->
                 </div>
             </div>
+            <h2>Debt Information Form</h2>
 
+    <form action="process_form.php" method="POST">
+        
+
+        <label>Do you have any loan EMIs or credit card dues?</label><br>
+        <input type="radio" id="yes" name="has_loans" value="yes" onclick="toggleLoanFields()"> Yes  
+        <input type="radio" id="no" name="has_loans" value="no" onclick="toggleLoanFields()" checked> No  
+        <br><br>
+
+        <div id="loan-details" style="display: none;">
+            <label for="home_loan">Home Loan EMI (₹):</label>
+            <input type="text" id="home_loan" name="home_loan"><br><br>
+
+            <label for="car_loan">Car Loan EMI (₹):</label>
+            <input type="text" id="car_loan" name="car_loan"><br><br>
+
+            <label for="personal_loan">Personal Loan EMI (₹):</label>
+            <input type="text" id="personal_loan" name="personal_loan"><br><br>
+
+            <label for="credit_card">Credit Card Minimum Payment (₹):</label>
+            <input type="text" id="credit_card" name="credit_card"><br><br>
+        </div>
             <button type="submit" class="submit-btn">
                 <i class="fas fa-paper-plane"></i>
                 Submit Application

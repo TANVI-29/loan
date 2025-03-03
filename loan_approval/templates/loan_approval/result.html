@@ -4,10 +4,50 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <title>Document</title>
 </head>
    Result is :{{result}}
-   
-    
+   {% if CIBILScore < 750 %}
+     <p style="color: red;">🚨 Low Credit Score</p>
+
+   {% elif LTV > 90 %}
+     <p style="color:red;">🚨 Poor LTV</p>
+
+   {% elif DTI > 45 %}
+     <p style="color: red;">🚨 LOW DTI</p>
+
+    {% endif %}
+
+<h2>Loan Approval Probability</h2>
+<style>
+    #loanChart {
+        width: 300px !important;
+        height: 300px !important;
+    }
+</style>
+<p>Loan Approval Probability: <span id="probabilityText"></span>%</p>
+<canvas id="loanChart" width="20" height="20"></canvas>
+
+<script>
+    var approvalPercentage = parseFloat("{{ Approval_probability|default:0 }}");
+    var rejectionPercentage = 100 - approvalPercentage;
+
+    document.getElementById("probabilityText").innerText = approvalPercentage.toFixed(2);
+    var ctx = document.getElementById('loanChart').getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: 'pie',
+        data: {
+            labels: ['Approved', 'Rejected'],
+            datasets: [{
+                data: [approvalPercentage, rejectionPercentage],
+                backgroundColor: ['#28a745', '#dc3545'],
+                borderColor: ['#ffffff', '#ffffff'],
+                borderWidth: 1
+            }]
+        }
+    });
+</script>
+
 </body>
 </html>

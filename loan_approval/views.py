@@ -74,9 +74,10 @@ def about_us(request):
 #     else:
 #         return 'Will get reject'
 
-model=joblib.load('loan_approval/model/gold_loan_linear_model.sav')
+
 
 def result(request):
+    model=joblib.load('loan_approval/model/gold_loan_linear_model.sav')
     if request.method == 'POST':
       print("recieved data:",request.POST)
       goldWeight = float(request.POST.get("goldWeight","0"))
@@ -97,7 +98,7 @@ def result(request):
 
     result=model.predict([[goldPurity,income,goldWeight,loanAmount,CIBILscore,ltv]])
     print("result:",result)
-    if result[0]=="Rejected":
+    if result[0]==1:
         result="Rejected"
     else:
         result="Approved"
@@ -106,4 +107,61 @@ def result(request):
     return render(request,'loan_approval/result.html',{'result':result})
 
 
-  
+def home_result(request):
+    model=joblib.load('loan_approval/model/home_loan_model.sav')
+    if request.method=='POST':
+        Age=float(request.POST.get("Age","0"))
+        WorkExperience=float(request.POST.get("WorkExperience","0"))
+        CIBILScore=float(request.POST.get("CIBILScore","0"))
+        Existing_Loan=float(request.POST.get("Existing_Loan","0"))
+        property_Value=float(request.POST.get("property_Value","0"))
+        loanAmount=float(request.POST.get("loanAmount","0"))
+        income=float(request.POST.get("income","0"))
+        home_loan=float(request.POST.get("home_loan","0").strip() or 0)
+        car_loan=float(request.POST.get("car_loan","0").strip() or 0)
+        persona_loan=float(request.POST.get("personal_loan","0").strip() or 0)
+        credit_card=float(request.POST.get("credit_card","0").strip() or 0)
+        print(loanAmount)
+        print(income)
+        print(property_Value)
+       
+        Dept_payment=home_loan + car_loan + persona_loan + credit_card
+        down_Payment=property_Value-loanAmount
+        print("Down:",down_Payment)
+        print("Dept:",Dept_payment)
+        month_income=income/12
+     
+        DTI=((Dept_payment/month_income)*100) if Dept_payment >0 else 0
+        
+        LTV=(loanAmount/property_Value)*100
+        print(DTI)
+        print(LTV)
+        result=model.predict([[Age,WorkExperience,CIBILScore,down_Payment,Existing_Loan,property_Value,loanAmount,income,DTI,LTV]])
+        input_features=np.array([[Age,WorkExperience,CIBILScore,down_Payment,Existing_Loan,property_Value,loanAmount,income,DTI,LTV]])
+        Approval_probability=model.predict_proba(input_features)[0][1] * 100 
+        Rejection_probability=100-Approval_probability
+        print(result)
+        print('Approval_probability',Approval_probability)
+
+        if result[0]==0:
+         result="Rejected"
+        else:
+         result="Approved"
+        return render(request,'loan_approval/result.html',{'result':result,'CIBILScore':CIBILScore,'DTI':DTI,'LTV':LTV,'Approval_probability':Approval_probability,'Rejection_probability':Rejection_probability})
+
+
+def personal_result(request):
+    model=joblib.load('loan_approval/model/home_loan_model.sav')
+    if request.method=='POST':
+        Age=float(request.POST.get("Age","0"))
+        WorkExperience=float(request.POST.get("WorkExperience","0"))
+        CIBILScore=float(request.POST.get("CIBILScore","0"))
+        ExistingLoan=float(request.POST.get("Existing_Loan","0"))
+        
+        loanAmount=float(request.POST.get("loanAmount","0"))
+        income=float(request.POST.get("income","0"))
+
+
+
+
+
