@@ -61,43 +61,49 @@ def about_us(request):
 
 
 
-def getPrediction(goldType,goldPurity,income,goldWeight,loanAmount,CIBILScore):
-    model=pickle.load(open("gold_loan_model.sav",'rb'))
-    scaled=pickle.load(open("scaler.sav",'rb'))
+# def getPrediction(goldType,goldPurity,income,goldWeight,loanAmount,CIBILScore):
+#     model=pickle.load(open("gold_loan_model.sav",'rb'))
+#     scaled=pickle.load(open("scaler.sav",'rb'))
 
-    prediction=model.predict(scaled.transform([
-        [goldType,goldPurity,income,goldWeight,loanAmount,CIBILScore]
-    ]))
+#     prediction=model.predict(scaled.transform([
+#         [goldType,goldPurity,income,goldWeight,loanAmount,CIBILScore]
+#     ]))
     
-    if prediction == 0:
-        return 'Will Approve'
-    else:
-        return 'Will get reject'
+#     if prediction == 0:
+#         return 'Will Approve'
+#     else:
+#         return 'Will get reject'
 
-# def result(request):
-#     if request.method == 'POST':
-#      goldWeight = float(request.GET["goldweight"])
-#      income = float(request.GET["income"])
-#      goldPurity = int(request.GET["goldPurity"])
-#      goldType=(request.GET["goldType"])
-#      loanAmount = float(request.GET["loanAmount"])
-#      CIBILScore = float(request.GET["CIBILScore"])
-
-#     result=getPrediction(goldType,goldPurity,income,goldWeight,loanAmount,CIBILScore)
-#     return render(request,'loan_approval/result.html',{'result':result})
+model=joblib.load('loan_approval/model/gold_loan_linear_model.sav')
 
 def result(request):
     if request.method == 'POST':
-        goldType = request.POST.get("goldType", None)  # ✅ Avoids KeyError
-        goldWeight = request.POST.get("goldWeight", 0)  # Default to 0 if missing
-        goldPurity = request.POST.get("goldPurity", None)
-        loanAmount = request.POST.get("loanAmount", 0)
-        income = request.POST.get("income", 0)
-        CIBILscore = request.POST.get("CIBILscore", 0)
+      print("recieved data:",request.POST)
+      goldWeight = float(request.POST.get("goldWeight","0"))
+      income = float(request.POST.get("income","0"))
+      goldPurity = float(request.POST.get("goldPurity","0"))
+      
+      loanAmount =float( request.POST.get("loanAmount","0"))
+      CIBILscore = float(request.POST.get("CIBILscore","0"))
+      print(goldWeight)
+      print(goldPurity)
+      print(income)
+      print(loanAmount)
+      print(CIBILscore)
+      gold_price_per_gram = 8500  # Example: Fixed price per gram
+    # loanAmount = goldWeight * gold_price_per_gram * (goldPurity / 100)
+      ltv = loanAmount / (goldWeight * gold_price_per_gram) if goldWeight > 0 else 0
+    
 
-        if goldType is None:
-            return HttpResponse("Error: Gold Type is required!", status=400)  # Handle missing data
+    result=model.predict([[goldPurity,income,goldWeight,loanAmount,CIBILscore,ltv]])
+    print("result:",result)
+    if result[0]=="Rejected":
+        result="Rejected"
+    else:
+        result="Approved"
+    
+    
+    return render(request,'loan_approval/result.html',{'result':result})
 
-        # Process form data
-        result=getPrediction(goldType,goldPurity,income,goldWeight,loanAmount,CIBILscore)
-        return render(request, 'loan_approval/result.html', {result})
+
+  

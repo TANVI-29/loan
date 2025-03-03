@@ -16,7 +16,7 @@
             <h2>Gold Loan Application</h2>
             <p>Fill in your details to apply for a gold loan</p>
         </div>
-        <form action="{% url 'loan_approval:result' %}" method="POST">
+        <form action="/gold-loan-form/result/" method="POST">
            
             {% csrf_token %}
         
@@ -29,7 +29,7 @@
             <div class="form-section">
                 <h3>Gold Details</h3>
                 <div class="form-grid">
-                    <div class="form-group">
+                    <!-- <div class="form-group">
                         <label for="goldType">Type of Gold</label>
                         <select id="goldType" required>
                             <option value="">Select Type</option>
@@ -37,15 +37,15 @@
                             <option value="coins">Gold Coins</option>
                             <option value="bars">Gold Bars</option>
                         </select>
-                    </div>
+                    </div> -->
                     
                     <div class="form-group">
                         <label for="goldWeight">Gold Weight (grams)</label>
-                        <input type="number" id="goldWeight" name='goldWeight' required>
+                        <input type="text" id="goldWeight" name='goldWeight' required>
                     </div>
                     <div class="form-group">
                         <label for="goldPurity">Gold Purity (Karats)</label>
-                        <select id="goldPurity" required>
+                        <select id="goldPurity" name="goldPurity" required>
                             <option value="">Select Purity</option>
                             <option value="24">24K</option>
                             <option value="22">22K</option>
@@ -54,27 +54,22 @@
                     </div>
                     <div class="form-group">
                         <label for="loanAmount">Required Loan Amount (₹)</label>
-                        <input type="number" id="loanAmount" required>
+                        <input type="text" id="loanAmount" name="loanAmount" required>
                     </div>
                     <div class="form-group">
                         <label for="income">Annual Income (₹)</label>
-                        <input type="number" id="loanAmount" required>
+                        <input type="text" id="income" name="income" required>
                     </div>
                     <div class="form-group">
                         <label for="CIBILscore">CIBIL Score</label>
-                        <input type="number" id="score" required>
+                        <input type="text" id="CIBILscore" name="CIBILscore" required>
                     </div>
-                    <div id="resultBox" style="display: none;"></div>
-
-
-
-                
-            </div>
+                  
 
             <button type="submit" class="submit-btn">
                 <i class="fas fa-paper-plane"></i>
                 Submit Application
-                <a href="{% url 'loan_approval:result' %}"  ></a>
+               
             </button>
         </form>
     </form>

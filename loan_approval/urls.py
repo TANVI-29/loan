@@ -12,7 +12,7 @@ urlpatterns = [
     path("home-loan-form/",views.home_form),
     path("personal-loan/",views.persona_loan),
     path("personal-loan-form/",views.personal_loan_form,name='personal-loan-form'),
-    path("gold-loan-form/result/",views.result,name='result'),
+    path("gold-loan-form/result/",views.result,name='gold-loan-form-result'),
     path("gold-loan-form/",views.gold_form),
     path("privacy-policy/",views.privacy_policy,name='privacy-policy'),
     path("about-us/",views.about_us,name='about-us'),
