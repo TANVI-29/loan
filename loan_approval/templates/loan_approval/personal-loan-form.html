@@ -8,6 +8,13 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="{% static 'css/loan-forms.css' %}" >
 </head>
+  <script>
+    function toggleLoanFields() {
+           var emiSection = document.getElementById("loan-details");
+           var hasLoans = document.querySelector('input[name="has_loans"]:checked').value;
+           emiSection.style.display = (hasLoans === "yes") ? "block" : "none";
+       }
+  </script>
 <body class="personal-theme">
     <div class="form-container">
         <div class="form-header">
@@ -15,26 +22,32 @@
             <h2>Personal Loan Application</h2>
             <p>Fill in your details to apply for a personal loan</p>
         </div>
-
-        <form id="personalLoanForm" onsubmit="submitLoanApplication(event, 'personal')">
+        <form action="/personal-loan-form/result/" method="POST">
+           
+            {% csrf_token %}
+        <form id="personalLoanForm" >
             <div class="form-section">
                 <h3>Personal Information</h3>
                 <div class="form-grid">
                     <div class="form-group">
-                        <label for="fullName">Full Name</label>
-                        <input type="text" id="fullName" required>
+                        <label for="Age">Age</label>
+                        <input type="text" id="Age" name="Age" required>
                     </div>
                     <div class="form-group">
-                        <label for="email">Email</label>
-                        <input type="email" id="email" required>
+                        <label for="CIBILScore">CIBIL Score</label>
+                        <input type="text" id="CIBILScore" name="CIBILScore" required>
                     </div>
                     <div class="form-group">
-                        <label for="phone">Phone Number</label>
-                        <input type="tel" id="phone" required>
+                        <label for="Income">Income (Annual)</label>
+                        <input type="text" id="Income" name="Income" required>
                     </div>
                     <div class="form-group">
-                        <label for="dob">Date of Birth</label>
-                        <input type="date" id="dob" required>
+                        <label for="WorkExperience">Work Experience (Years)</label>
+                        <input type="text" id="WorkExperience" name="WorkExperience" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="No_Dependencies">Number of Dependents</label>
+                        <input type="text" id="No_Dependencies" name="No_Dependencies" required>
                     </div>
                 </div>
             </div>
@@ -43,23 +56,29 @@
                 <h3>Loan Details</h3>
                 <div class="form-grid">
                     <div class="form-group">
-                        <label for="loanAmount">Loan Amount (₹)</label>
-                        <input type="number" id="loanAmount" required>
+                        <label for="ExistingLoan">Existing Loan (₹)</label>
+                        <input type="text" id="ExistingLoan" name="ExistingLoan" required>
                     </div>
                     <div class="form-group">
-                        <label for="tenure">Loan Tenure (Months)</label>
-                        <select id="tenure" required>
+                        <label for="LoanAmount">Loan Amount (₹)</label>
+                        <input type="text" id="LoanAmount" name="LoanAmount" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="LoanTenure">Loan Tenure (Years)</label>
+                        <select id="LoanTenure" name="LoanTenure" required>
                             <option value="">Select Tenure</option>
-                            <option value="12">12 Months</option>
-                            <option value="24">24 Months</option>
-                            <option value="36">36 Months</option>
-                            <option value="48">48 Months</option>
-                            <option value="60">60 Months</option>
+                            <option value="1">1 Year</option>
+                            <option value="2">2 Years</option>
+                            <option value="3">3 Years</option>
+                            <option value="4">4 Years</option>
+                            <option value="5">5 Years</option>
+                            <option value="6">6 Years</option>
+                            <option value="7">7 Years</option>
                         </select>
                     </div>
                     <div class="form-group">
                         <label for="purpose">Loan Purpose</label>
-                        <select id="purpose" required>
+                        <select id="purpose" name="purpose" required>
                             <option value="">Select Purpose</option>
                             <option value="education">Education</option>
                             <option value="medical">Medical</option>
@@ -68,10 +87,7 @@
                             <option value="other">Other</option>
                         </select>
                     </div>
-                    <div class="form-group">
-                        <label for="monthlyIncome">Monthly Income (₹)</label>
-                        <input type="number" id="monthlyIncome" required>
-                    </div>
+                    
                 </div>
             </div>
 
@@ -79,20 +95,40 @@
                 <h3>Employment Details</h3>
                 <div class="form-grid">
                     <div class="form-group">
-                        <label for="employmentType">Employment Type</label>
-                        <select id="employmentType" required>
+                        <label for="Self_Employeed">Self Employeed</label>
+                        <select id="Self_Employeed" name="Self_Employeed" required>
                             <option value="">Select Type</option>
-                            <option value="salaried">Salaried</option>
-                            <option value="self-employed">Self Employed</option>
-                            <option value="business">Business Owner</option>
+                            <option value="1">Yes</option>
+                            <option value="0">No</option>
+                            
                         </select>
                     </div>
-                    <div class="form-group">
-                        <label for="companyName">Company Name</label>
-                        <input type="text" id="companyName" required>
-                    </div>
+                    
                 </div>
             </div>
+            <h2>Debt Information Form</h2>
+
+            <form action="process_form.php" method="POST">
+                
+        
+                <label>Do you have any loan EMIs or credit card dues?</label><br>
+                <input type="radio" id="yes" name="has_loans" value="yes" onclick="toggleLoanFields()"> Yes  
+                <input type="radio" id="no" name="has_loans" value="no" onclick="toggleLoanFields()" checked> No  
+                <br><br>
+        
+                <div id="loan-details" style="display: none;">
+                    <label for="home_loan">Home Loan EMI (₹):</label>
+                    <input type="text" id="home_loan" name="home_loan"><br><br>
+        
+                    <label for="car_loan">Car Loan EMI (₹):</label>
+                    <input type="text" id="car_loan" name="car_loan"><br><br>
+        
+                    <label for="personal_loan">Personal Loan EMI (₹):</label>
+                    <input type="text" id="personal_loan" name="personal_loan"><br><br>
+        
+                    <label for="credit_card">Credit Card Minimum Payment (₹):</label>
+                    <input type="text" id="credit_card" name="credit_card"><br><br>
+                </div>
 
             <button type="submit" class="submit-btn">
                 <i class="fas fa-paper-plane"></i>

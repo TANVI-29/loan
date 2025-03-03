@@ -17,6 +17,12 @@
    {% elif DTI > 45 %}
      <p style="color: red;">🚨 LOW DTI</p>
 
+   {% elif Income < 200000 %}
+     <p style="color: red;">🚨 LOW Income</p>
+
+   {% elif Self_Employeed %}
+     <p style="color: red;">💼 Self Employeed ones face variable earnings</p>
+
     {% endif %}
 
 <h2>Loan Approval Probability</h2>

@@ -119,13 +119,13 @@ def home_result(request):
         income=float(request.POST.get("income","0"))
         home_loan=float(request.POST.get("home_loan","0").strip() or 0)
         car_loan=float(request.POST.get("car_loan","0").strip() or 0)
-        persona_loan=float(request.POST.get("personal_loan","0").strip() or 0)
+        personal_loan=float(request.POST.get("personal_loan","0").strip() or 0)
         credit_card=float(request.POST.get("credit_card","0").strip() or 0)
         print(loanAmount)
         print(income)
         print(property_Value)
        
-        Dept_payment=home_loan + car_loan + persona_loan + credit_card
+        Dept_payment=home_loan + car_loan + personal_loan + credit_card
         down_Payment=property_Value-loanAmount
         print("Down:",down_Payment)
         print("Dept:",Dept_payment)
@@ -151,15 +151,41 @@ def home_result(request):
 
 
 def personal_result(request):
-    model=joblib.load('loan_approval/model/home_loan_model.sav')
+    model=joblib.load('loan_approval/model/personal_loan_model2.sav')
     if request.method=='POST':
         Age=float(request.POST.get("Age","0"))
         WorkExperience=float(request.POST.get("WorkExperience","0"))
         CIBILScore=float(request.POST.get("CIBILScore","0"))
         ExistingLoan=float(request.POST.get("Existing_Loan","0"))
+        LoanTenure=float(request.POST.get("LoanTenure","0"))
+        LoanAmount=float(request.POST.get("LoanAmount","0") or 0)
+        Income=float(request.POST.get("Income","0"))
+        Self_Employeed=float(request.POST.get("Self_Employeed","0"))
+        No_Dependencies=float(request.POST.get("No_Dependencies","0"))
+        home_loan=float(request.POST.get("home_loan","0").strip() or 0)
+        car_loan=float(request.POST.get("car_loan","0").strip() or 0)
+        personal_loan=float(request.POST.get("personal_loan","0").strip() or 0)
+        credit_card=float(request.POST.get("credit_card","0").strip() or 0)
+        print(LoanAmount)
+        print(Income)
+        print(LoanTenure)
+        Dept_payment=home_loan + car_loan + personal_loan + credit_card
+        month_income=Income/12
+        DTI=((Dept_payment/month_income)*100) if Dept_payment >0 else 0
+        print(DTI)
         
-        loanAmount=float(request.POST.get("loanAmount","0"))
-        income=float(request.POST.get("income","0"))
+        result=model.predict([[Age,WorkExperience,CIBILScore,LoanTenure,No_Dependencies,ExistingLoan,LoanAmount,Income,DTI,Self_Employeed]])
+        input_features=np.array([[Age,WorkExperience,CIBILScore,LoanTenure,No_Dependencies,ExistingLoan,LoanAmount,Income,DTI,Self_Employeed]])
+        Approval_probability=model.predict_proba(input_features)[0][1] * 100 
+        Rejection_probability=100-Approval_probability
+        print(result)
+        print('Approval_probability',Approval_probability)
+
+        if result[0]==0:
+         result="Rejected"
+        else:
+         result="Approved"
+        return render(request,'loan_approval/result.html',{'result':result,'Income':Income,'CIBILScore':CIBILScore,'DTI':DTI,'Self_Employeed':Self_Employeed,'Approval_probability':Approval_probability,'Rejection_probability':Rejection_probability})
 
 
 
