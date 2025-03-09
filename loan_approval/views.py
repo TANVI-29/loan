@@ -76,35 +76,41 @@ def about_us(request):
 
 
 
-def result(request):
-    model=joblib.load('loan_approval/model/gold_loan_linear_model.sav')
+def gold_result(request):
+    model=joblib.load('loan_approval/model/gold_loan_model.sav')
     if request.method == 'POST':
-      print("recieved data:",request.POST)
+      
       goldWeight = float(request.POST.get("goldWeight","0"))
       income = float(request.POST.get("income","0"))
       goldPurity = float(request.POST.get("goldPurity","0"))
       
       loanAmount =float( request.POST.get("loanAmount","0"))
-      CIBILscore = float(request.POST.get("CIBILscore","0"))
+      CIBILScore = float(request.POST.get("CIBILScore","0"))
       print(goldWeight)
       print(goldPurity)
       print(income)
       print(loanAmount)
-      print(CIBILscore)
+      print(CIBILScore)
       gold_price_per_gram = 8500  # Example: Fixed price per gram
     # loanAmount = goldWeight * gold_price_per_gram * (goldPurity / 100)
-      ltv = loanAmount / (goldWeight * gold_price_per_gram) if goldWeight > 0 else 0
+      ltv = (loanAmount / (goldWeight * gold_price_per_gram))*100 if goldWeight > 0 else 0
     
-
-    result=model.predict([[goldPurity,income,goldWeight,loanAmount,CIBILscore,ltv]])
+      print(ltv)
+    result=model.predict([[goldPurity,income,goldWeight,loanAmount,CIBILScore,ltv]])
     print("result:",result)
-    if result[0]==1:
+    input_features=np.array([[goldWeight,CIBILScore,goldPurity,loanAmount,income,ltv]])
+    Rejection_probability=model.predict_proba(input_features)[0][1] * 100 
+    Approval_probability=100-Rejection_probability
+    print(result)
+    print('Approval_probability',Approval_probability)
+    if result[0]==0:
         result="Rejected"
     else:
         result="Approved"
     
     
-    return render(request,'loan_approval/result.html',{'result':result})
+    
+    return render(request,'loan_approval/result.html',{'result':result, 'CIBILScore':CIBILScore,'income':income,'Approval_probability':Approval_probability,'Rejection_probability':Rejection_probability})
 
 
 def home_result(request):
@@ -191,3 +197,13 @@ def personal_result(request):
 
 
 
+# def gold_result(request):
+#    model=joblib.load('loan_approval/model/gold_loan_model1.sav')
+#    if request.method=='POST':
+#         Age=float(request.POST.get("Age","0"))
+#         WorkExperience=float(request.POST.get("WorkExperience","0"))
+#         CIBILScore=float(request.POST.get("CIBILScore","0"))
+#         ExistingLoan=float(request.POST.get("Existing_Loan","0"))
+#         LoanTenure=float(request.POST.get("LoanTenure","0"))
+#         LoanAmount=float(request.POST.get("LoanAmount","0") or 0)
+#         Income=float(request.POST.get("Income","0"))
