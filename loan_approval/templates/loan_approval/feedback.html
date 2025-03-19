@@ -14,7 +14,10 @@
             <h2><i class="fas fa-comments"></i> Feedback Form</h2>
             <p>We value your feedback to improve our services</p>
             
-            <form id="feedbackForm">
+            <form method="POST" id="feedbackForm" name="feedback" >
+                <form id="feedbackForm"  >
+                {% csrf_token %}
+                {{ form.as_p }} 
                 <div class="form-group">
                     <label for="name"><i class="fas fa-user"></i> Name</label>
                     <input type="text" id="name" required>
@@ -27,7 +30,7 @@
 
                 <div class="form-group">
                     <label for="feedbackType"><i class="fas fa-list"></i> Feedback Type</label>
-                    <select id="feedbackType" required>
+                    <select id="feedbackType" name="feedbackType" required>
                         <option value="">Select Type</option>
                         <option value="suggestion">Suggestion</option>
                         <option value="complaint">Complaint</option>
@@ -63,6 +66,6 @@
             </form>
         </div>
     </div>
-    <script src="{% static 'javascript/feedback.js' %}"></script>
+    <!-- <script src="{% static 'javascript/feedback.js' %}"></script> -->
 </body>
 </html> 

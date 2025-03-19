@@ -5,19 +5,19 @@ document.addEventListener('DOMContentLoaded', function() {
         e.preventDefault();
         
         // Get form values
-        const formData = {
-            name: document.getElementById('name').value,
-            email: document.getElementById('email').value,
-            type: document.getElementById('feedbackType').value,
-            message: document.getElementById('message').value,
-            rating: document.querySelector('input[name="rating"]:checked')?.value || '',
-            subscribe: document.getElementById('subscribe').checked
-        };
+        // const formData = {
+        //     name: document.getElementById('name').value,
+        //     email: document.getElementById('email').value,
+        //     type: document.getElementById('feedbackType').value,
+        //     message: document.getElementById('message').value,
+        //     rating: document.querySelector('input[name="rating"]:checked')?.value || '',
+        //     subscribe: document.getElementById('subscribe').checked
+        // };
 
         // Validate form
-        if (!validateForm(formData)) {
-            return;
-        }
+        // if (!validateForm(formData)) {
+        //     return;
+        // }
 
         // Show success message
         showMessage('Thank you for your feedback!');
@@ -27,33 +27,33 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // Add email validation on input
-    const emailInput = document.getElementById('email');
-    emailInput.addEventListener('input', function() {
-        if (this.value && !validateEmail(this.value)) {
-            this.setCustomValidity('Please enter a valid email address');
-        } else {
-            this.setCustomValidity('');
-        }
-    });
+//     const emailInput = document.getElementById('email');
+//     emailInput.addEventListener('input', function() {
+//         if (this.value && !validateEmail(this.value)) {
+//             this.setCustomValidity('Please enter a valid email address');
+//         } else {
+//             this.setCustomValidity('');
+//         }
+//     });
 });
 
-function validateForm(data) {
-    if (!data.name || !data.email || !data.type || !data.message) {
-        showMessage('Please fill in all required fields', 'error');
-        return false;
-    }
+// function validateForm(data) {
+//     if (!data.name || !data.email || !data.type || !data.message) {
+//         showMessage('Please fill in all required fields', 'error');
+//         return false;
+//     }
 
-    if (!validateEmail(data.email)) {
-        showMessage('Please enter a valid email address', 'error');
-        return false;
-    }
+//     if (!validateEmail(data.email)) {
+//         showMessage('Please enter a valid email address', 'error');
+//         return false;
+//     }
 
-    return true;
-}
+//     return true;
+// }
 
-function validateEmail(email) {
-    return email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/);
-}
+// function validateEmail(email) {
+//     return email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/);
+// }
 
 function showMessage(message, type = 'success') {
     const messageDiv = document.createElement('div');
@@ -105,4 +105,4 @@ ratingLabels.forEach(label => {
     label.addEventListener('mouseout', function() {
         this.style.transform = 'scale(1)';
     });
-}); 
+ }); 

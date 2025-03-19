@@ -1,13 +1,16 @@
 from django.contrib import admin
 from django.urls import path, include
 from .import views
+from .views import feedback
 app_name = 'loan_approval'  # ✅ This registers the namespace
 
 
 urlpatterns = [
-    path("",views.home),
+    path("",views.home, name='home'),
+   
     path("calculators/",views.calculators,name='calculators'),
-    path("feedback/",views.feedback,name='feedback'),
+    path("feedback/",views.feedback, name='feedback'),
+    # path('feedback/', feedback, name='feedback'),
     path("home-loan/",views.home_loan),
     path("home-loan-form/",views.home_form),
     path("personal-loan/",views.persona_loan),

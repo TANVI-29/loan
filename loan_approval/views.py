@@ -1,11 +1,12 @@
 import pickle
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 import joblib
 import numpy as np
 from django.http import JsonResponse
 from django.http import HttpResponse
+from .models import Feedback
 
-
+from loan_approval.forms import FeedbackForm
 
 # Create your views here.
 def home(request):
@@ -15,8 +16,57 @@ def calculators(request):
     print("✅ Calculators View Called!") 
     return render(request,"loan_approval/calculators.html")
 
+# def feedback(request):
+#     print("Request method:", request.method)
+#     if request.method == "GET":
+#         print("Get request")
+#     elif request.method == "POST":
+#         form = FeedbackForm(request.POST)
+#         print("Form is valid:", form.is_valid())
+#         if form.is_valid():
+#             form.save()  # Save the feedback to the database
+#             return redirect('index')
+#         else:
+#          form = FeedbackForm()  
+#         return render(request,"loan_approval/feedback.html")
+
+
+from django.shortcuts import render, redirect
+from .forms import FeedbackForm  # Import your FeedbackForm
+
 def feedback(request):
-    return render(request,"loan_approval/feedback.html")
+    print("Request method:", request.method)
+    
+    if request.method == "GET":
+        print("Get request")
+        name = request.POST.get('name')
+        email= request.POST.get('email')
+        type=request.POST.get('feedbackType')
+        message = request.POST.get('message')
+        rating= request.POST.get('rating')
+        
+        # Save the data to the database
+        Feedback.objects.create(name=name,email=email,type=type, message=message,rating=rating)
+        # Render the form for GET requests
+        # form = FeedbackForm()
+        return render(request, "loan_approval/feedback.html")
+    
+    elif request.method == "POST":
+        form = FeedbackForm(request.POST)
+        print("Form data:", request.POST)  # Print form data
+       
+        print("Form is valid:", form.is_valid())
+        
+        if form.is_valid():
+            form.save()  # Save the feedback to the database
+            # return redirect('home')  # Redirect to the index page after
+        else:
+            print("Form errors:", form.errors)  # Print form errors
+        return HttpResponse("Thank you for your feedback!") 
+    else:
+            return render(request, "loan_approval/feedback.html", {'form': form})
+
+
 
 def home_loan(request):
     return render(request,"loan_approval/home-loan.html")
