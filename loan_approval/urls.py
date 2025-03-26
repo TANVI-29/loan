@@ -5,6 +5,7 @@ from .views import feedback
 app_name = 'loan_approval'  # ✅ This registers the namespace
 
 
+
 urlpatterns = [
     path("",views.home, name='home'),
    

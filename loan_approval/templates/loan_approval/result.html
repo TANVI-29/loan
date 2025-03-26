@@ -1,4 +1,4 @@
-{% load static %}
+<!-- {% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -34,6 +34,110 @@
 </style>
 <p>Loan Approval Probability: <span id="probabilityText"></span>%</p>
 <canvas id="loanChart" width="20" height="20"></canvas>
+
+<script>
+    var approvalPercentage = parseFloat("{{ Approval_probability|default:0 }}");
+    var rejectionPercentage = 100 - approvalPercentage;
+
+    document.getElementById("probabilityText").innerText = approvalPercentage.toFixed(2);
+    var ctx = document.getElementById('loanChart').getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: 'pie',
+        data: {
+            labels: ['Approved', 'Rejected'],
+            datasets: [{
+                data: [approvalPercentage, rejectionPercentage],
+                backgroundColor: ['#28a745', '#dc3545'],
+                borderColor: ['#ffffff', '#ffffff'],
+                borderWidth: 1
+            }]
+        }
+    });
+</script>
+
+</body>
+</html> -->
+
+
+
+
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <title>Loan Approval Result</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f8f9fa;
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            justify-content: center;
+            align-items: center;
+        }
+        .result-box, .chart-box {
+            padding: 20px;
+            background: white;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            text-align: center;
+        }
+        .result-box {
+            width: 600px;
+        }
+        .chart-box {
+            width: 700px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            
+
+        }
+        #loanChart {
+            width: 250px !important;
+            height: 250px !important;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- Result Section -->
+    <div class="result-box">
+        <h2>Loan Approval Result</h2>
+        <p>Result is: <strong>{{ result }}</strong></p>
+        
+        {% if CIBILScore < 750 %}
+            <p style="color: red;">⚠️ Low Credit Score</p>
+        {% elif LTV > 90 %}
+            <p style="color: red;">⚠️ Poor LTV</p>
+        {% elif DTI > 45 %}
+            <p style="color: red;">⚠️ High Debt-to-Income Ratio</p>
+        {% elif Income < 200000 %}
+            <p style="color: red;">⚠️ Low Income</p>
+        {% elif Self_Employeed %}
+            <p style="color: red;">💼 Self-Employed applicants face variable earnings</p>
+        {% endif %}
+    </div>
+
+    <!-- Chart Section -->
+    <div class="chart-box">
+        <h2>Loan Approval Probability</h2>
+        <p>Loan Approval Probability: <span id="probabilityText"></span>%</p>
+        <canvas id="loanChart"></canvas>
+    </div>
+</div>
 
 <script>
     var approvalPercentage = parseFloat("{{ Approval_probability|default:0 }}");

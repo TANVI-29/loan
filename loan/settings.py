@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-)u(=itwmjg4me90^((*q#csj!wd2oyc_^b71r3e5x(x3kve5i=
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['192.168.239.1', 'localhost', '127.0.0.1']
 
 APPEND_SLASH = False
 
@@ -77,10 +77,25 @@ WSGI_APPLICATION = 'loan.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
+
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'feedback',
+        'USER': 'root',  
+        'PASSWORD': 'Tanu@2906',  
+        'HOST': 'localhost', 
+        'PORT': '3306', 
+        'OPTIONS': {
+            'init_command': "SET GLOBAL sql_mode='STRICT_TRANS_TABLES'"
+        }
     }
 }
 

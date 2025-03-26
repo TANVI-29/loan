@@ -514,14 +514,14 @@ body {
 .rating label {
     cursor: pointer;
     font-size: 30px;
-    color: #ddd;
+    color: #d19f14;
     transition: color 0.2s;
 }
 
 .rating label:hover,
 .rating label:hover ~ label,
 .rating input:checked ~ label {
-    color: #ffd700;
+    color: #22221f;
 }
 
 .checkbox {
