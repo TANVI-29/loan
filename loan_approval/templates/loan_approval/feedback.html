@@ -15,8 +15,8 @@
             <h2><i class="fas fa-comments"></i> Feedback Form</h2>
             <p>We value your feedback to improve our services</p>
             
-            <form method="POST" id="feedbackForm" name="feedback" >
-                <form id="feedbackForm"  >
+            <form method="POST"  id="feedbackForm" name="feedback" >
+                
                 {% csrf_token %}
                 
                 <div class="form-group">
@@ -46,15 +46,15 @@
                     {{ form.message }}
                     {{ form.message.errors }}
                 </div>
-                
+<!--                 
                 <div >
-                <label for="rating">Feedback Rating</label>
+                <label for="rating"></label>
                     <div id="star-rating"></div>
                     {{ form.rating.label_tag }}
                     {{ form.rating }}
                     {{ form.rating.errors }}
                 </div>
-                
+                 -->
                 
 
                 

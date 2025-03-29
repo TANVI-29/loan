@@ -75,20 +75,148 @@ from .forms import FeedbackForm  # Import your FeedbackForm
 
 
 
+# def feedback(request):
+#     if request.method == "POST":
+#         print("Received Data:", request.POST)
+        
+#         form = FeedbackForm(request.POST)
+#         if form.is_valid():
+#             form.save()
+#             return redirect('loan_approval:home')  # Redirect to the home page after successful submission
+#         else:
+#             # If the form is invalid, render the form again with error messages
+#             return render(request, "loan_approval/feedback.html", {'form': form})
+#     else:
+#         form = FeedbackForm()
+#         return render(request, "loan_approval/feedback.html", {'form': form})
+
+
+from django.shortcuts import render, redirect
+from .models import Feedback  # Import your Feedback model
+
+
+from django.shortcuts import render, redirect
+from .forms import FeedbackForm
+
+# def feedback(request):
+#     if request.method == "POST":
+#         form = FeedbackForm(request.POST)
+#         print("Form data:", request.POST)  # Print form data
+#         print(form.is_valid())
+#         if form.is_valid():
+#             form.save() 
+#             print("Form saved successfully!")
+#             return redirect("loan_approval:home")
+#         else:
+#             print("Form errors:", form.errors) # ✅ Save data to the database
+#               # Redirect after submission
+#     else:
+#         form = FeedbackForm()
+        
+#     return render(request, "loan_approval/feed3.html", {"form": form})
+
+
+
+from django.shortcuts import render, redirect
+from django.db import connection
+from .models import Feedback
+from .forms import FeedbackForm
+from django.db import connection, transaction
+# def feedback(request):
+#     if request.method == "POST":
+#         form = FeedbackForm(request.POST)
+#         print("Received Form Data:", request.POST)
+
+#         if form.is_valid():
+#             feedback = form.save(commit=False)  # Save but don't commit yet
+#             feedback.save()  # Now commit explicitly
+#             transaction.commit()
+#             print("committed")
+#             # Force commit in MySQL
+            
+#             # Ensure data is committed by checking in MySQL
+#             with connection.cursor() as cursor:
+#                 cursor.execute("COMMIT;")
+#                 print("Form data saved to database:", feedback)
+#             print("Form saved successfully!")  
+#             return redirect('loan_approval:home')
+#         else:
+#             print("Form errors:", form.errors)
+
+#     form = FeedbackForm()
+#     return render(request, "loan_approval/feed3.html", {'form': form})
+
+
+
+from django.db import connection
+from django.shortcuts import render, redirect
+from .models import Feedback
+from .forms import FeedbackForm
+
 def feedback(request):
     if request.method == "POST":
         form = FeedbackForm(request.POST)
+        print("Received Form Data:", request.POST)
+
         if form.is_valid():
-            form.save()
-            return redirect('loan_approval:home')  # Redirect to the home page after successful submission
+            feedback = form.save(commit=False)  
+            feedback.save()
+            print("Saved Feedback Object:", feedback)   # Save to database
+            
+            # Print SQL Queries Executed
+            print("Executed SQL Queries:")
+            for query in connection.queries:
+                print(query['sql'])
+
+            # Force Commit in MySQL
+            with connection.cursor() as cursor:
+                cursor.execute("COMMIT;")
+            
+            print("Form saved successfully!")  
+            return redirect('loan_approval:home')
         else:
-            # If the form is invalid, render the form again with error messages
-            return render(request, "loan_approval/feedback.html", {'form': form})
-    else:
-        form = FeedbackForm()
-        return render(request, "loan_approval/feedback.html", {'form': form})
+            print("Form errors:", form.errors)
+
+    form = FeedbackForm()
+    return render(request, "loan_approval/feed3.html", {'form': form})
 
 
+
+
+# def feedback(request):
+#     print("Request method:", request.method)
+
+#     if request.method == "POST":
+#         # Collect data from POST request
+#         name = request.POST.get('name')
+#         email = request.POST.get('email')
+#         feedback_type = request.POST.get('feedbackType')
+#         message = request.POST.get('message')
+#         rating = request.POST.get('rating')
+#         print(name,email,feedback_type,message,rating)
+#         # Ensure all required fields are provided
+#         # if not all([name, email, feedback_type, message, rating]):
+#         #     return render(request, "loan_approval/feedback.html", {"error": "All fields are required"})
+
+#         # Save feedback to the database
+#         Feedback.objects.create(
+#             name=name or None,
+#             email=email or None,
+#             type=feedback_type or None,
+#             message=message or None,
+#             rating=rating or 1
+#         )
+
+#         # Redirect to a success page or back to the feedback form
+#         return redirect("loan_approval:home")  # Make sure this URL exists
+
+    # If GET request, render the feedback form
+    # return render(request, "loan_approval/feed3.html")
+
+
+
+# def feedback(request):
+#    return render(request, "loan_approval/feed3.html")
 
 def home_loan(request):
     return render(request,"loan_approval/home-loan.html")

@@ -1,0 +1,68 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feedback Form - LoanSure</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="{% static 'css/feedback-styles.css' %}">
+</head>
+<body>
+    <div class="container">
+        <div class="feedback-box">
+            <h2><i class="fas fa-comments"></i> Feedback Form</h2>
+           
+            
+            <form action="" method="POST" id="feedbackForm">
+                {% csrf_token %}
+
+        
+                <div class="form-group">
+                    <label for="name"><i class="fas fa-user"></i> Name</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="email"><i class="fas fa-envelope"></i> Email</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="feedbackType"><i class="fas fa-list"></i> Feedback Type</label>
+                    <select id="feedbackType" name="feedback_type" required>
+                        <option value="">Select Type</option>
+                        <option value="suggestion">Suggestion</option>
+                        <option value="complaint">Complaint</option>
+                        <option value="appreciation">Appreciation</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="message"><i class="fas fa-comment"></i> Message</label>
+                    <textarea id="message" rows="5" name="message" required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label><i class="fas fa-star"></i> Rate our service</label>
+                    <div class="rating" name="rating" required>
+                        <input type="radio" name="rating" value="5" id="5"><label for="5">☆</label>
+                        <input type="radio" name="rating" value="4" id="4"><label for="4">☆</label>
+                        <input type="radio" name="rating" value="3" id="3"><label for="3">☆</label>
+                        <input type="radio" name="rating" value="2" id="2"><label for="2">☆</label>
+                        <input type="radio" name="rating" value="1" id="1"><label for="1">☆</label>
+                    </div>
+                </div>
+
+               
+
+                <button type="submit">
+                    <i class="fas fa-paper-plane"></i> Submit Feedback
+                </button>
+            </form>
+        </div>
+    </div>
+    <!-- <script src="feedback.js"></script> -->
+</body>
+</html> 

@@ -15,8 +15,8 @@ class FeedbackForm(forms.ModelForm):
         model = Feedback
         print("feedback form")
         
-        fields = ['name', 'email', 'message','type','rating']
+        fields = ['name', 'email', 'message','feedback_type','rating']
         labels = {
-            'type': 'Feedback Type',
-             'rating':'Rate our Service'
+            'feedback_type': 'Feedback Type',
+            #  'rating':'Rate our Service'
         }
