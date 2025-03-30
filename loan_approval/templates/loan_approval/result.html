@@ -96,10 +96,18 @@
         .result-box {
             width: 600px;
         }
+
+        .result-box.approved {
+           background-color: #d4edda; /* Light green */
+        }
+
+        .result-box.rejected {
+           background-color: #f8d7da; /* Light red */
+        }
         .chart-box {
-            width: 700px;
+            width: 500px;
             display: flex;
-            justify-content: center;
+            justify-content: left;
             align-items: center;
             
 
@@ -116,48 +124,109 @@
     <!-- Result Section -->
     <div class="result-box">
         <h2>Loan Approval Result</h2>
-        <p>Result is: <strong>{{ result }}</strong></p>
+        <p>Result is: 
+            {% if result == "Will Approved" %}
+                <span style="color: green;">{{ result }}</span>
+            {% else %}
+                <span style="color: red;">{{ result }}</span>
+            {% endif %}
+        </p>
         
+        {% for condition in conditions %}
+            {% if condition.condition %}
+                <p style="color: red;">{{ condition.message }}</p>
+            {% endif %}
+        {% endfor %}
+
+        <!-- {% if result == "Will Approved" %}
+            <p style="color: green;">✅ Congratulations! Your loan will get approved.</p>
+        {% else %}
+            <p style="color: red;">❌ Sorry, your loan will be rejected.</p> -->
+        {% endif %}
         {% if CIBILScore < 750 %}
-            <p style="color: red;">⚠️ Low Credit Score</p>
+            <p style="color: red;">Low CIBIL Score</p>
         {% elif LTV > 90 %}
-            <p style="color: red;">⚠️ Poor LTV</p>
+            <p style="color: red;">Poor LTV</p>
         {% elif DTI > 45 %}
-            <p style="color: red;">⚠️ High Debt-to-Income Ratio</p>
+            <p style="color: red;">High Debt-to-Income Ratio</p>
+            <p>
+                <a href="https://www.example.com/high-dti-info" target="_blank" style="color: blue; text-decoration: underline; cursor: pointer;  font-size: 12px;">
+                    Want to know Debt-to-income ratio ?
+                </a>
+            </p>
         {% elif Income < 200000 %}
-            <p style="color: red;">⚠️ Low Income</p>
+            <p style="color: red;">Low Income</p>
         {% elif Self_Employeed %}
-            <p style="color: red;">💼 Self-Employed applicants face variable earnings</p>
+            <p style="color: red;">Self-Employed applicants face variable earnings</p>
         {% endif %}
     </div>
 
     <!-- Chart Section -->
     <div class="chart-box">
         <h2>Loan Approval Probability</h2>
-        <p>Loan Approval Probability: <span id="probabilityText"></span>%</p>
+        
+        <p>Loan Approval Probability: <span id="probabilityText" style="font-weight: bold;" ></span>%</p>
+        
         <canvas id="loanChart"></canvas>
     </div>
 </div>
+
+<!-- <p>
+    Loan Approval Probability: 
+    <span id="probabilityText" style="font-weight: bold;"></span>%
+</p> -->
 
 <script>
     var approvalPercentage = parseFloat("{{ Approval_probability|default:0 }}");
     var rejectionPercentage = 100 - approvalPercentage;
 
-    document.getElementById("probabilityText").innerText = approvalPercentage.toFixed(2);
+    // Set the probability text
+    var probabilityText = document.getElementById("probabilityText");
+    probabilityText.innerText = approvalPercentage.toFixed(2);
+
+    // Change the color dynamically based on the approval percentage
+    if (approvalPercentage >= 75) {
+        probabilityText.style.color = "#28a745"; // Green for high approval probability
+    } else if (approvalPercentage >= 50) {
+        probabilityText.style.color = "#ffc107"; // Yellow for medium approval probability
+    } else {
+        probabilityText.style.color = "#dc3545"; // Red for low approval probability
+    }
+
+    // Create the doughnut chart
     var ctx = document.getElementById('loanChart').getContext('2d');
     var myChart = new Chart(ctx, {
-        type: 'pie',
+        type: 'doughnut',
         data: {
             labels: ['Approved', 'Rejected'],
             datasets: [{
                 data: [approvalPercentage, rejectionPercentage],
-                backgroundColor: ['#28a745', '#dc3545'],
+                backgroundColor: ['#28a745', '#dc3545'], // Green for Approved, Red for Rejected
                 borderColor: ['#ffffff', '#ffffff'],
                 borderWidth: 1
             }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'top', // Position of the legend
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function(tooltipItem) {
+                            return tooltipItem.label + ': ' + tooltipItem.raw + '%';
+                        }
+                    }
+                }
+            },
+            cutout: '50%' // Creates the donut effect
         }
+        
     });
 </script>
+
+
 
 </body>
 </html>

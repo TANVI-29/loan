@@ -293,24 +293,24 @@ def gold_result(request):
       print(CIBILScore)
       gold_price_per_gram = 8500  # Example: Fixed price per gram
     # loanAmount = goldWeight * gold_price_per_gram * (goldPurity / 100)
-      ltv = (loanAmount / (goldWeight * gold_price_per_gram))*100 if goldWeight > 0 else 0
+      LTV = (loanAmount / (goldWeight * gold_price_per_gram))*100 if goldWeight > 0 else 0
     
-      print(ltv)
-    result=model.predict([[goldPurity,income,goldWeight,loanAmount,CIBILScore,ltv]])
+      print(LTV)
+    result=model.predict([[goldPurity,income,goldWeight,loanAmount,CIBILScore,LTV]])
     print("result:",result)
-    input_features=np.array([[goldWeight,CIBILScore,goldPurity,loanAmount,income,ltv]])
+    input_features=np.array([[goldWeight,CIBILScore,goldPurity,loanAmount,income,LTV]])
     Rejection_probability=model.predict_proba(input_features)[0][1] * 100 
     Approval_probability=100-Rejection_probability
     print(result)
     print('Approval_probability',Approval_probability)
     if result[0]==0:
-        result="Rejected"
+        result="Will Rejected"
     else:
-        result="Approved"
+        result="Will Approved"
     
     
     
-    return render(request,'loan_approval/result.html',{'result':result, 'CIBILScore':CIBILScore,'income':income,'Approval_probability':Approval_probability,'Rejection_probability':Rejection_probability})
+    return render(request,'loan_approval/result.html',{'result':result, 'CIBILScore':CIBILScore,'income':income,'LTV':LTV,'Approval_probability':Approval_probability,'Rejection_probability':Rejection_probability})
 
 
 def home_result(request):
@@ -350,9 +350,9 @@ def home_result(request):
         print('Approval_probability',Approval_probability)
 
         if result[0]==0:
-         result="Rejected"
+         result="Will Rejected"
         else:
-         result="Approved"
+         result="Will Approved"
         return render(request,'loan_approval/result.html',{'result':result,'CIBILScore':CIBILScore,'DTI':DTI,'LTV':LTV,'Approval_probability':Approval_probability,'Rejection_probability':Rejection_probability})
 
 
@@ -388,9 +388,9 @@ def personal_result(request):
         print('Approval_probability',Approval_probability)
 
         if result[0]==0:
-         result="Rejected"
+         result="Will Rejected"
         else:
-         result="Approved"
+         result="Will Approved"
         return render(request,'loan_approval/result.html',{'result':result,'Income':Income,'CIBILScore':CIBILScore,'DTI':DTI,'Self_Employeed':Self_Employeed,'Approval_probability':Approval_probability,'Rejection_probability':Rejection_probability})
 
 
