@@ -1,0 +1,170 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CredEase - Loan Approval Prediction</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+  </head>
+  <body>
+    <header>
+      <nav>
+        <div class="logo">
+          <div class="logo-container">
+            <i class="fas fa-chart-line logo-icon-main"></i>
+            <i class="fas fa-coins logo-icon-secondary"></i>
+          </div>
+          <span>CredEase</span>
+        </div>
+        <ul>
+          <li><a href="#home" class="nav-link active">Home</a></li>
+          <li><a href="{% url 'loan_approval:calculators'%}" class="nav-link">Calculator</a></li>
+          <li><a href="{% url 'loan_approval:about-us'%}" class="nav-link">About us</a></li>
+          <!-- <li><a href="contact.html" class="nav-link">Contact</a></li> -->
+        </ul>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero" id="home">
+        <div class="hero-content">
+          <span class="pre-title">Welcome to CredEase</span>
+          <h1>Loan Approval <span class="highlight">Prediction</span></h1>
+          <p class="hero-description">
+            A platform that predicts loan approval based on the applicant's
+            cibil score and other financial information.
+          </p>
+        </div>
+        <div class="hero-video">
+          <div class="image-content">
+            <video
+              src="static/video/video.mp4"
+              autoplay
+              loop
+              muted
+              playsinline
+              disablePictureInPicture
+              controlsList="nodownload nofullscreen noremoteplayback"
+              class="feature-video"
+              preload="auto"
+            >
+              Your browser does not support the video
+              tag.
+            </video>
+          </div>
+        </div>
+      </section>
+
+      <section class="loan-types">
+        <div class="section-header">
+          <h2>Explore Our Loan Types</h2>
+          <p>Find the perfect loan solution for your needs</p>
+        </div>
+        <div class="loan-cards">
+          <div class="loan-card">
+            <i class="fas fa-coins card-icon"></i>
+            <h3>Gold Loan</h3>
+            <!-- <p>Quick loans against your gold assets with competitive interest rates</p> -->
+            <a href="#" class="card-link"
+              >Learn More <i class="fas fa-chevron-right"></i
+            ></a>
+          </div>
+          <div class="loan-card">
+            <i class="fas fa-user card-icon"></i>
+            <h3>Personal Loan</h3>
+            <!-- <p>Flexible personal loans tailored to your specific requirements</p> -->
+            <a href="#" class="card-link"
+              >Learn More <i class="fas fa-chevron-right"></i
+            ></a>
+          </div>
+          <div class="loan-card">
+            <i class="fas fa-home card-icon"></i>
+            <h3>Home Loan</h3>
+            <!-- <p>Make your dream home a reality with our affordable home loans</p> -->
+            <a href="#" class="card-link"
+              >Learn More <i class="fas fa-chevron-right"></i
+            ></a>
+          </div>
+        </div>
+      </section>
+
+      <section class="why-choose-us">
+        <h2>Why Choose Us?</h2>
+        <div class="features">
+          <div class="feature">
+            <i class="fas fa-robot feature-icon"></i>
+            <h3>ML-Based Prediction</h3>
+            <p>
+              Our system analyzes your loan eligibility using advanced machine
+              learning algorithms.
+            </p>
+          </div>
+          <div class="feature">
+            <i class="fas fa-bolt feature-icon"></i>
+            <h3>Quick Results</h3>
+            <p>
+              Get instant results with real-time data processing and analysis.
+            </p>
+          </div>
+          <div class="feature">
+            <i class="fas fa-shield-alt feature-icon"></i>
+            <h3>100% Secured</h3>
+            <p>
+              Your data remains private and protected with bank-grade security.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section class="about" id="about">
+        <div class="about-content">
+          <!-- <span class="pre-title">About Us</span> -->
+          <h2>
+            Transforming the Loan
+            <span class="highlight">Approval Process</span>
+          </h2>
+          <p class="about-description">
+            We're committed to making loan approval predictions more accessible,
+            transparent, and efficient for everyone.
+          </p>
+          <ul class="about-features">
+            <li><i class="fas fa-check"></i> Instant Approval Prediction</li>
+            <li><i class="fas fa-check"></i> Competitive Interest Rates</li>
+            <li><i class="fas fa-check"></i> Emi Calculator</li>
+          </ul>
+          <a href="{% url 'loan_approval:about'%}" class="btn">About Us</a>
+        </div>
+        
+        <div class="about-image">
+          <div class="image-placeholder">
+            <img src="static/images/about.jpg" alt="About Us" class="about-img" />
+          </div>
+        </div>
+      </section>
+
+      <div class="feedback-section">
+        <h2>Your Feedback Matters</h2>
+        <p>Help us improve our services by sharing your valuable feedback</p>
+        <a href="{% url 'loan_approval:feedback'%}" class="btn"
+          >Share Feedback <i class="fas fa-paper-plane"></i
+        ></a>
+      </div>
+
+      <div class="privacy-section">
+        <a href="{% url 'loan_approval:privacy-policy'%}" class="privacy-btn">
+          <i class="fas fa-shield-alt"></i>
+          Privacy Policy
+        </a>
+      </div>
+
+      <div class="footer">
+        <p>&copy; 2025 CredEase. All rights reserved.</p>
+      </div>
+    </main>
+  </body>
+</html>

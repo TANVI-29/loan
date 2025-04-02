@@ -88,9 +88,9 @@ WSGI_APPLICATION = 'loan.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'feed_details',
+        'NAME': 'feedback',
         'USER': 'root',  
-        'PASSWORD': 'Tanu@2906',  
+        'PASSWORD': 'AKK@1812',  
         'HOST': 'localhost', 
         'PORT': '3306', 
         'OPTIONS': {

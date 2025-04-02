@@ -33,16 +33,16 @@
 
 /* Section Styles */
 .about-section {
-    background: rgba(0, 0, 0, 0.95);
+    background: rgba(255, 255, 255, 0.95);
     border-radius: 20px;
     padding: 2.5rem;
     margin-bottom: 3rem;
-    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 15px 30px rgba(255, 255, 255, 0.1);
     opacity: 0;
 }
 
 .section-icon {
-    background: linear-gradient(135deg, #23a6d5, #23d5ab);
+    background: linear-gradient(135deg, #23cac2, #28cab7);
     width: 70px;
     height: 70px;
     border-radius: 50%;
@@ -55,6 +55,16 @@
 .section-icon i {
     font-size: 2rem;
     color: rgb(0, 0, 0);
+}
+
+.about-section h2 {
+    color: rgb(0, 0, 0);
+    margin-bottom: 1rem;
+}
+
+.about-section p {
+    color: rgb(0, 0, 0);
+    line-height: 1.6;
 }
 
 /* Prediction Steps */
@@ -90,6 +100,14 @@
     font-weight: bold;
 }
 
+.step h3 {
+    color: rgb(0, 0, 0);
+}
+
+.step p {
+    color: rgb(0, 0, 0);
+}
+
 /* Tech Features */
 .tech-features {
     display: grid;
@@ -108,6 +126,14 @@
     font-size: 2.5rem;
     color: #23a6d5;
     margin-bottom: 1rem;
+}
+
+.tech-feature h3 {
+    color: rgb(0, 0, 0);
+}
+
+.tech-feature p {
+    color: rgb(0, 0, 0);
 }
 
 /* Stats Container */
@@ -131,6 +157,10 @@
     font-weight: bold;
     color: #23a6d5;
     margin-bottom: 0.5rem;
+}
+
+.stat-item p {
+    color: rgb(0, 0, 0);
 }
 
 /* Animations */
@@ -194,4 +224,4 @@
     .stats-container {
         grid-template-columns: 1fr;
     }
-} 
+}

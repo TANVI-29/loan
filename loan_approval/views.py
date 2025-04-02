@@ -11,11 +11,11 @@ from loan_approval.forms import FeedbackForm
 
 # Create your views here.
 def home(request):
-    return render(request,"loan_approval/index.html")
+    return render(request,"loan_approval/index2.html")
 
-def calculators(request):
-    print("✅ Calculators View Called!") 
-    return render(request,"loan_approval/calculators.html")
+def calculator(request):
+    print("✅ Calculator View Called!") 
+    return render(request,"loan_approval/calculator.html")
 
 # def feedback(request):
 #     print("Request method:", request.method)
